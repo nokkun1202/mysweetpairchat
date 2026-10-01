@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>my sweet pair chat ♡</title>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+*{box-sizing:border-box}body{margin:0;background:#fff6fa;color:#6b5360;font-family:'Noto Sans KR',sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{display:none!important}
+#app{min-height:100vh}.landing{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:min(460px,94vw);background:#fff;border:1px solid #f2d7e2;border-radius:28px;padding:34px;box-shadow:0 20px 60px #d78ba722;text-align:center}
+.logo{font:46px Jua;color:#e88eaf;line-height:1}.heart{font-size:48px;color:#ee9abb}.sub{color:#a98c98;font-size:13px;line-height:1.7}
+.primary{background:#ef96b7;color:#fff;border-radius:14px;padding:13px 18px;box-shadow:0 8px 20px #ef96b733}.secondary{background:#fff0f5;color:#c66d8d;border:1px solid #f2cad9;border-radius:14px;padding:12px 16px}
+.join{display:flex;gap:8px;margin-top:12px}.join input{flex:1;border:1px solid #efd6e1;border-radius:14px;text-align:center;padding:11px;letter-spacing:3px;outline:0}
+.room{height:100vh;display:flex;flex-direction:column}.top{height:65px;background:#fff;border-bottom:1px solid #f1dce5;display:flex;align-items:center;justify-content:space-between;padding:0 22px}.brand{font:24px Jua;color:#e68cac}.code{font-size:12px;color:#a58391}
+.main{flex:1;min-height:0;display:grid;grid-template-columns:245px 1fr}.side{background:#fffafb;border-right:1px solid #f1dce5;padding:20px;text-align:center}.side h3{font-size:11px;letter-spacing:2px;color:#ba8c9e}
+.avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;background:#fff0f6;border:4px solid #ffe0eb;margin:8px auto;display:flex;align-items:center;justify-content:center;color:#e89bb8;font-size:30px}.name{font:20px Jua}
+.sidebtn{width:100%;margin-top:12px;background:#ffedf4;color:#bc6c89;padding:11px;border-radius:12px}.private{font-size:10px;color:#b298a2;line-height:1.6;margin-top:18px}
+.connection{margin-top:22px;background:#fff;border:1px solid #f1dce5;border-radius:14px;padding:12px;font-size:10px;line-height:1.7;color:#a88b98}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ddd;margin-right:5px}.dot.on{background:#72c19a}
+.chat{min-width:0;display:flex;flex-direction:column;background:#fffafd}.empty{margin:auto;text-align:center;padding:30px}.empty .big{font-size:48px;color:#ee9ab9}.empty h2,.story h2{font:29px Jua;font-weight:400}
+.ready{display:flex;gap:20px;justify-content:center;font-size:11px;color:#9d7d89;margin:20px}.ready b{color:#74b99b}.start{min-width:230px}
+.story{height:100%;display:flex;flex-direction:column;max-width:1000px;width:100%;margin:auto}.storyhead{padding:22px 30px 12px;display:flex;justify-content:space-between;align-items:center}.eyebrow{font-size:10px;letter-spacing:2px;color:#d982a3}.story h2{margin:4px 0}.new{background:#fff0f5;color:#c66d8d;padding:9px 13px;border-radius:11px;font-size:11px}
+.info{margin:0 30px;background:#fff2f7;border:1px solid #f4dce6;border-radius:16px;padding:14px;white-space:pre-wrap;font-size:12px;line-height:1.8}.opening{margin:12px 30px;background:#fff;border:1px solid #f0dfe6;border-radius:16px;padding:18px;white-space:pre-wrap;font-size:13px;line-height:1.9}
+.messages{flex:1;overflow:auto;padding:10px 30px}.msg{max-width:72%;padding:11px 14px;margin:8px 0;border-radius:16px;font-size:13px;line-height:1.6;white-space:pre-wrap}.me{margin-left:auto;background:#ffdce9;border-top-right-radius:5px}.other{background:#fff;border:1px solid #f0dfe6;border-top-left-radius:5px}
+.meta{font-size:9px;color:#b89da9;margin:2px 5px 0}.composer{display:flex;gap:8px;padding:14px 30px 20px}.composer textarea{flex:1;border:1px solid #efd9e3;border-radius:14px;padding:11px;resize:none;outline:0}.send{background:#ee96b5;color:white;border-radius:13px;padding:10px 17px}
+.modal{position:fixed;inset:0;background:#4e304044;display:flex;align-items:center;justify-content:center;padding:18px;z-index:10}.modalbox{background:#fffafb;width:min(620px,96vw);max-height:92vh;overflow:auto;border-radius:25px;padding:27px;position:relative}.close{position:absolute;right:17px;top:10px;background:none;font-size:27px;color:#b995a4}.modalbox h2{font:27px Jua;font-weight:400}.modalbox label{display:block;font-size:11px;color:#967986;margin:9px 0}.modalbox input,.modalbox textarea{width:100%;margin-top:5px;border:1px solid #efd9e3;border-radius:10px;padding:10px;outline:0}.modalbox textarea{min-height:65px;resize:vertical}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modalactions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}.ai-note{background:#fff0f5;padding:12px;border-radius:12px;font-size:11px;line-height:1.7;color:#9a7181}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#705463;color:#fff;padding:10px 15px;border-radius:12px;font-size:12px;opacity:0;transition:.2s;z-index:30}.toast.on{opacity:1;transform:translate(-50%,0)}
+.statusline{font-size:10px;color:#ad929e;margin-top:10px}.danger{color:#d67b98}
+@media(max-width:700px){.main{grid-template-columns:1fr}.side{display:none}.storyhead,.messages,.composer{padding-left:14px;padding-right:14px}.info,.opening{margin-left:14px;margin-right:14px}.grid{grid-template-columns:1fr}.msg{max-width:88%}}
+</style>
+</head>
+<body>
+<div id="app">
+<section id="landing" class="landing">
+  <div class="card">
+    <div class="heart">♡</div>
+    <div class="logo">my sweet<br>pair chat</div>
+    <p class="sub">둘만의 캐릭터로 만들어가는 작은 이야기</p>
+    <button id="hostBtn" class="primary" style="width:100%">♡ 방 만들기</button>
+    <p style="font-size:11px;color:#b39aa5">로그인 없이 바로 시작해요.</p>
+    <div style="margin:18px 0;color:#c0a3ae;font-size:11px">또는</div>
+    <div class="join"><input id="code" maxlength="24" placeholder="방 코드"><button id="joinBtn" class="secondary">참가하기</button></div>
+    <p id="landStatus" class="sub"></p>
+  </div>
+</section>
+
+<section id="room" class="room hidden">
+<header class="top">
+  <div class="brand">♡ my sweet pair chat</div>
+  <div class="code">ROOM <b id="roomCode"></b>　<button id="invite" class="secondary" style="padding:7px 10px;font-size:11px">초대 링크</button></div>
+</header>
+<div class="main">
+<aside class="side">
+  <h3>MY CHARACTER ♡</h3>
+  <div id="sideAvatar" class="avatar">♡</div><div id="sideName" class="name">프로필 미작성</div>
+  <button id="profileBtn" class="sidebtn">✎ 내 프로필 설정</button>
+  <div class="private">내 캐릭터 설정은 이 화면에서만 관리해요.<br>상대에게 프로필 편집 화면을 보여주지 않습니다.</div>
+  <div class="connection">
+    <div><span id="connDot" class="dot"></span><b id="connText">상대 연결 대기중</b></div>
+    <div id="connRole">HOST / GUEST</div>
+  </div>
+</aside>
+
+<section class="chat">
+<div id="empty" class="empty">
+  <div class="big">♡</div><h2>우리의 이야기를 시작할까요?</h2>
+  <p class="sub">두 사람이 프로필을 완성하면<br>랜덤 조합으로 매번 다른 AU와 역극 시작 상황을 만들 수 있어요.</p>
+  <div class="ready"><span>HOST <b id="hostReady">○</b></span><span>GUEST <b id="guestReady">○</b></span></div>
+  <button id="start" class="primary start" disabled>♡ 채팅 시작하기</button>
+  <p id="hint" style="font-size:10px;color:#b59ba5">두 사람 모두 프로필을 작성해주세요.</p>
+</div>
+
+<div id="story" class="story hidden">
+  <div class="storyhead"><div><div class="eyebrow">RANDOM AU</div><h2 id="title"></h2></div><button id="new" class="new">✦ NEW AU</button></div>
+  <div id="info" class="info"></div><div id="opening" class="opening"></div>
+  <div id="messages" class="messages"></div>
+  <div class="composer"><textarea id="text" rows="2" placeholder="캐릭터의 행동이나 대사를 입력하세요..."></textarea><button id="send" class="send">보내기 ♡</button></div>
+</div>
+</section></div></section>
+</div>
+
+<div id="profileModal" class="modal hidden"><div class="modalbox">
+<button class="close" data-close="profileModal">×</button><div class="eyebrow">MY CHARACTER</div><h2>내 캐릭터 설정</h2>
+<div class="ai-note">이 정보는 내 브라우저에 저장됩니다. 상대에게는 프로필 내용이 전송되지 않고, 작성 완료 여부만 공유됩니다.</div>
+<label>프로필 이미지<input id="pImg" type="file" accept="image/*"></label>
+<div class="grid">
+<label>이름<input id="pName"></label><label>나이<input id="pAge"></label>
+<label>성별<input id="pGender"></label><label>한줄 소개<input id="pIntro"></label>
+</div>
+<label>외관<textarea id="pAppearance"></textarea></label><label>성격<textarea id="pPersonality"></textarea></label>
+<label>말투<textarea id="pSpeech"></textarea></label><div class="grid"><label>좋아하는 것<textarea id="pLikes"></textarea></label><label>싫어하는 것<textarea id="pDislikes"></textarea></label></div>
+<label>기타 설정<textarea id="pExtra"></textarea></label>
+<div class="modalactions"><button class="secondary" data-close="profileModal">취소</button><button id="saveProfile" class="primary">저장하기 ♡</button></div>
+</div></div>
+
+
+<div id="toast" class="toast"></div>
+
+<script>
+/*
+  my sweet pair chat - P2P edition
+
+  구조:
+  - 회원가입 / 로그인 없음
+  - Firebase 없음
+  - PeerJS Cloud는 두 브라우저가 서로를 찾는 signaling에만 사용
+  - 실제 채팅 메시지는 WebRTC DataChannel로 두 브라우저 사이에 직접 전달
+  - 프로필 내용은 상대에게 보내지 않음
+  - 상대에게는 "프로필 작성 완료 여부"만 전송
+*/
+
+const $=id=>document.getElementById(id);
+const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200)};
+
+let role=localStorage.getItem('msp_role')||null;
+let roomCode=localStorage.getItem('msp_room')||null;
+let profiles=JSON.parse(localStorage.getItem('msp_profiles')||'{}');
+let peer=null, conn=null, connected=false;
+let remoteReady=false;
+let storyStarted=false;
+
+/* ---------- profile ---------- */
+function myProfile(){return profiles[role]||null}
+function myReady(){return !!(profiles[role] && profiles[role].name && profiles[role].personality)}
+
+function renderProfile(){
+  const p=myProfile();
+  $('sideName').textContent=p?.name||'프로필 미작성';
+  $('sideAvatar').innerHTML=p?.img
+    ? '<img src="'+p.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">'
+    : '♡';
+
+  if(role==='host'){
+    $('hostReady').textContent=myReady()?'✓':'○';
+    $('guestReady').textContent=remoteReady?'✓':'○';
+  }else{
+    $('hostReady').textContent=remoteReady?'✓':'○';
+    $('guestReady').textContent=myReady()?'✓':'○';
+  }
+  updateStart();
+}
+
+function updateStart(){
+  const bothReady=myReady()&&remoteReady;
+  $('start').disabled=!bothReady;
+  if(!connected) $('hint').textContent='상대방이 방에 들어올 때까지 기다려주세요.';
+  else if(!myReady()) $('hint').textContent='먼저 내 프로필을 작성해주세요.';
+  else if(!remoteReady) $('hint').textContent='상대방이 프로필을 작성하고 저장하면 시작할 수 있어요.';
+  else $('hint').textContent='두 사람 모두 준비됐어요 ♡';
+}
+
+function saveLocal(){
+  localStorage.setItem('msp_profiles',JSON.stringify(profiles));
+}
+
+/* ---------- PeerJS / P2P ---------- */
+function createPeer(){
+  if(peer) try{peer.destroy()}catch(e){}
+  peer=new Peer(); // PeerJS Cloud 기본값 사용
+
+  peer.on('open',id=>{
+    if(role==='host'){
+      roomCode=id;
+      localStorage.setItem('msp_room',roomCode);
+      $('roomCode').textContent=roomCode;
+      $('landStatus').textContent='방 생성 완료';
+      toast('방을 만들었어요 ♡');
+    }
+  });
+
+  peer.on('connection',incoming=>{
+    if(role!=='host') return;
+    if(conn && conn.open){incoming.close();return;}
+    setupConnection(incoming);
+  });
+
+  peer.on('disconnected',()=>{
+    setConnection(false,'신호 서버 연결 끊김');
+  });
+
+  peer.on('error',err=>{
+    console.error(err);
+    if(err.type==='peer-unavailable') toast('그 방을 찾을 수 없어요.');
+    else if(err.type==='network') toast('네트워크 연결을 확인해주세요.');
+    else toast('연결 오류: '+(err.type||'unknown'));
+  });
+}
+
+function setupConnection(c){
+  conn=c;
+  conn.on('open',()=>{
+    connected=true;
+    setConnection(true,'상대 연결됨');
+    // 프로필 내용은 보내지 않고 완료 여부만 보낸다.
+    send({type:'ready',ready:myReady()});
+    toast('상대방과 연결됐어요 ♡');
+    renderProfile();
+  });
+
+  conn.on('data',handleData);
+
+  conn.on('close',()=>{
+    connected=false;remoteReady=false;
+    setConnection(false,'상대 연결 종료');
+    renderProfile();
+    toast('상대방과 연결이 끊어졌어요.');
+  });
+
+  conn.on('error',e=>{
+    console.error(e);
+    setConnection(false,'P2P 오류');
+  });
+}
+
+function connectToHost(){
+  if(!peer) return;
+  if(!roomCode) return toast('방 코드가 없어요.');
+  const target=roomCode.trim();
+  if(target===peer.id) return toast('자기 자신의 방에는 참가할 수 없어요.');
+  const c=peer.connect(target,{reliable:true,serialization:'json'});
+  setupConnection(c);
+}
+
+function send(data){
+  if(conn && conn.open) conn.send(data);
+}
+
+function setConnection(on,label){
+  connected=on;
+  $('connDot').classList.toggle('on',on);
+  $('connText').textContent=label;
+  $('connRole').textContent=(role||'').toUpperCase()+' / '+(on?'P2P 연결':'대기중');
+  updateStart();
+}
+
+function handleData(data){
+  if(!data || !data.type)return;
+
+  if(data.type==='ready'){
+    remoteReady=!!data.ready;
+    renderProfile();
+    return;
+  }
+
+  if(data.type==='chat'){
+    addMessage(data.text,false,data.name||'상대');
+    return;
+  }
+
+  if(data.type==='storyRequest'){
+    if(role==='host' && myReady() && remoteReady) applyStory(makeRandomStory(),true);
+    return;
+  }
+
+  if(data.type==='story'){
+    applyStory(data.story,false);
+    return;
+  }
+
+  if(data.type==='clear'){
+    $('messages').innerHTML='';
+  }
+}
+
+/* ---------- room ---------- */
+function enterRoom(){
+  $('landing').classList.add('hidden');
+  $('room').classList.remove('hidden');
+  $('roomCode').textContent=roomCode||'연결중...';
+  $('connRole').textContent=(role||'').toUpperCase()+' / 연결중';
+  renderProfile();
+  createPeer();
+  if(role==='guest'){
+    // Peer 객체가 open 되면 참가 시도
+    peerOpenWait();
+  }
+}
+
+function peerOpenWait(){
+  const tryConnect=()=>{
+    if(peer && peer.open) connectToHost();
+    else setTimeout(tryConnect,250);
+  };
+  tryConnect();
+}
+
+$('hostBtn').onclick=()=>{
+  role='host';
+  roomCode=null;
+  localStorage.setItem('msp_role','host');
+  localStorage.removeItem('msp_room');
+  enterRoom();
+};
+
+$('joinBtn').onclick=()=>{
+  const c=$('code').value.trim();
+  if(!c)return toast('방 코드를 입력해주세요.');
+  role='guest';
+  roomCode=c;
+  localStorage.setItem('msp_role','guest');
+  localStorage.setItem('msp_room',roomCode);
+  enterRoom();
+};
+
+$('invite').onclick=()=>{
+  if(!roomCode)return toast('방 코드를 기다리는 중이에요.');
+  const u=location.href.split('?')[0]+'?room='+encodeURIComponent(roomCode);
+  navigator.clipboard?.writeText(u).then(()=>toast('초대 링크를 복사했어요 ♡')).catch(()=>prompt('이 링크를 복사해주세요.',u));
+};
+
+const urlRoom=new URLSearchParams(location.search).get('room');
+if(urlRoom){
+  $('code').value=urlRoom;
+}
+
+/* ---------- profile modal ---------- */
+$('profileBtn').onclick=()=>{
+  const p=myProfile()||{};
+  const fields=['Name','Age','Gender','Intro','Appearance','Personality','Speech','Likes','Dislikes','Extra'];
+  fields.forEach(k=>{
+    const e=$('p'+k);
+    e.value=p[k.toLowerCase()]||'';
+  });
+  $('profileModal').classList.remove('hidden');
+};
+
+$('saveProfile').onclick=()=>{
+  const p={
+    name:$('pName').value.trim(),
+    age:$('pAge').value.trim(),
+    gender:$('pGender').value.trim(),
+    intro:$('pIntro').value.trim(),
+    appearance:$('pAppearance').value.trim(),
+    personality:$('pPersonality').value.trim(),
+    speech:$('pSpeech').value.trim(),
+    likes:$('pLikes').value.trim(),
+    dislikes:$('pDislikes').value.trim(),
+    extra:$('pExtra').value.trim(),
+    img:profiles[role]?.img||''
+  };
+
+  if(!p.name||!p.personality)return toast('이름과 성격은 입력해주세요.');
+
+  profiles[role]=p;
+  saveLocal();
+  $('profileModal').classList.add('hidden');
+  renderProfile();
+
+  // 상대에게 프로필 내용이 아니라 "작성 완료 여부"만 전달
+  send({type:'ready',ready:myReady()});
+  toast('프로필을 저장했어요 ♡');
+};
+
+$('pImg').onchange=e=>{
+  const f=e.target.files[0];
+  if(!f)return;
+  if(f.size>1500000)return toast('이미지는 1.5MB 이하로 해주세요.');
+  const r=new FileReader();
+  r.onload=()=>{
+    profiles[role]=profiles[role]||{};
+    profiles[role].img=r.result;
+  };
+  r.readAsDataURL(f);
+};
+
+document.querySelectorAll('[data-close]').forEach(b=>{
+  b.onclick=()=>$(b.dataset.close).classList.add('hidden');
+});
+
+/* ---------- random AU engine : no AI / no API ---------- */
+/*
+  AI 없이 작동하는 조합형 AU 엔진.
+  세계관/장소/관계/역할/사건/분위기/소품/장치/첫 장면을 각각 따로 뽑아
+  매번 새로운 조합을 만든다.
+  역할 명칭은 성별에 종속되지 않는 단어를 사용한다.
+*/
+const AU={
+  worlds:[
+    '현대 대도시의 밤','비밀이 많은 항구 도시','화려한 상류층 사회','네온빛이 번지는 야경 도시','작은 해안 도시','유럽풍 구시가지','눈이 내리는 북쪽 도시','비 오는 번화가','낡은 골목과 신식 빌딩이 공존하는 도시','24시간 잠들지 않는 도시',
+    '마법과 기술이 공존하는 세계','마법학교가 있는 도시','귀족과 상인이 공존하는 왕국','괴이한 사건이 일상인 도시','밤에만 열리는 이계','시간이 조금씩 어긋나는 세계','꿈과 현실의 경계가 흐린 세계','기억을 거래할 수 있는 세계','초능력자가 숨어 사는 도시','인간과 이종족이 함께 사는 도시',
+    '거대 기업이 도시를 지배하는 세계','가상현실과 현실이 겹친 미래','감시 기술이 일상화된 근미래','우주 식민지 사회','거대한 우주 정거장','황폐해진 미래 도시','인공섬으로 이루어진 도시','바다 위에 세워진 도시','기후 재난 이후의 도시','비밀 연구기관이 존재하는 세계'
+  ],
+  places:[
+    '재즈 바','칵테일 바','루프톱 바','라이브 펍','심야 클럽','회원제 라운지','지하 클럽','가면무도회장','호텔 로비','호텔 바','호텔 최상층','호텔의 비밀 라운지','카지노','24시간 편의점','심야 카페','고급 레스토랑','작은 식당','야시장','새벽의 포장마차','기차역 플랫폼',
+    '야간 열차','공항 라운지','항구의 창고','부두','선착장','도심 옥상','빌딩 옥상 정원','주차장','지하 주차장','낡은 극장','독립 영화관','미술관','갤러리','도서관','서점','골동품점','꽃집','동물병원','병원 복도','사설 클리닉',
+    '사무실','비밀 사무실','보안실','회의실','개인 스튜디오','사진관','방송국','라디오 부스','신문사','법률 사무소','탐정 사무소','경매장','보석상','은행','금고실','카지노의 뒷방','마피아 조직의 본부','비밀 거래소','지하 아지트',
+    '마법학교 도서관','마법 상점','연금술 연구실','왕궁의 연회장','왕궁 정원','기사단 회의실','귀족 저택','온실','숲속 오두막','안개 낀 마을','오래된 성','폐성당','시계탑','천문대','유령이 나온다는 저택','비밀 통로','지하 묘지','마법 기차','공중 도시의 전망대','시간을 보관하는 기록관',
+    '우주 정거장 식당','우주선의 관제실','우주선의 휴게실','연구소','격리 구역','관측소','미래 도시의 환승역','가상현실 게임룸','인공섬의 호텔','해저 연구기지','사막의 휴게소','눈 덮인 산장','온천 호텔','해변 별장','섬의 리조트','유람선','크루즈선의 라운지','등대','폭풍을 피한 대피소','무인 기차 안'
+  ],
+  relations:[
+    '처음 만난 사이','오랜만에 재회한 사이','서로 이름만 알고 있던 사이','우연히 얽힌 사이','같은 목적을 가진 협력자','서로 다른 목적을 가진 협력자','비밀을 하나씩 공유하는 사이','서로에게 빚이 있는 사이','서로의 약점을 알고 있는 사이','과거의 사건으로 연결된 사이',
+    '한쪽이 다른 쪽에게 의뢰를 맡긴 사이','의뢰를 함께 수행하는 사이','거래로 만난 사이','계약으로 연결된 사이','잠시 동행하게 된 사이','뜻밖의 동거인이 된 사이','같은 공간에 고립된 사이','같은 팀에 배정된 사이','라이벌 관계','경쟁자이면서 협력자인 사이',
+    '서로의 정체를 의심하는 사이','한쪽이 다른 쪽을 조사하는 사이','서로를 보호해야 하는 사이','같은 비밀을 추적하는 사이','공통의 적을 둔 사이','서로 다른 세력에 속한 사이','대립하던 두 세력의 대표 사이','거래 상대와 중개자','정보원과 의뢰인','목격자와 조사자',
+    '주인과 손님','운영자와 방문객','관리자와 이용자','안내자와 여행자','기록자와 당사자','전문가와 의뢰인','경호 담당자와 보호 대상','현장 담당자와 지원 담당자','파트너로 배정된 사이','한 사건의 공동 책임자',
+    '서로에게 첫인상이 강하게 남은 사이','한 번의 오해로 멀어진 사이','오해를 풀기 위해 다시 만난 사이','우연히 같은 약속 장소에 나온 사이','서로의 물건을 잘못 가져간 사이','한 통의 편지로 연결된 사이','익명의 메시지를 주고받던 사이','온라인에서만 알고 지내던 사이','같은 사람을 찾고 있는 사이','같은 장소의 이상 현상을 조사하는 사이'
+  ],
+  roles:[
+    ['바 운영자','단골 손님'],['라운지 관리자','초대받은 방문객'],['클럽 관계자','처음 방문한 손님'],['호텔 프런트 담당자','예약 없이 찾아온 방문객'],['호텔 보안 담당자','신원이 불분명한 투숙객'],['카지노 운영 담당자','수상한 게임 참가자'],['경매 진행자','익명의 입찰자'],['갤러리 큐레이터','작품을 찾는 방문객'],['기록 담당자','기록에 등장한 당사자'],['탐정 사무소 담당자','의뢰인'],
+    ['조사 담당자','현장 목격자'],['정보 중개자','정보를 필요로 하는 의뢰인'],['거래 담당자','비밀 거래의 상대방'],['경호 담당자','보호 대상'],['협상 담당자','협상 상대'],['현장 책임자','지원 담당자'],['기자','인터뷰 대상'],['사진작가','촬영 의뢰인'],['방송 진행자','갑작스러운 게스트'],['스튜디오 운영자','예약자'],
+    ['마피아 조직의 연락 담당자','거래를 위해 찾아온 상대'],['조직의 정보 담당자','잠입해 온 협력자'],['비밀 조직의 관리자','새로 합류한 구성원'],['운송 담당자','수상한 화물의 수령인'],['중개인','비밀을 가진 고객'],['밀수 거래 담당자','거래 상대'],['비공식 협상 담당자','상대 세력의 대표'],['조직의 회계 담당자','사라진 자금을 추적하는 사람'],['조직의 기록 담당자','기록에서 지워진 사람'],['잠입 조사 담당자','조직 내부의 협력자'],
+    ['마법 연구자','마법 현상을 발견한 사람'],['마법 상점 운영자','특별한 물건을 찾는 손님'],['학교의 기록 담당자','정체불명의 전학생'],['왕궁의 협상 담당자','초대받은 방문객'],['기사단의 현장 담당자','사건의 목격자'],['저택 관리 담당자','늦은 밤 찾아온 손님'],['유물 감정 담당자','유물을 가져온 의뢰인'],['점술 기록 담당자','미래에 등장할 사람'],['시간 기록 담당자','시간 밖에서 온 방문객'],['이계 안내자','현실에서 넘어온 사람'],
+    ['우주선 관제 담당자','정체불명의 탑승자'],['연구소 담당자','실험의 유일한 생존자'],['보안 담당자','격리 구역의 방문자'],['탐사 담당자','구조 신호의 발신자'],['기술 담당자','오작동의 원인을 찾는 사람'],['우주 정거장 운영 담당자','신원 미확인 승객'],['가상현실 운영자','접속 기록이 없는 이용자'],['기록 복구 담당자','삭제된 기록의 당사자'],['재난 대응 담당자','구조를 기다리는 사람'],['관측 담당자','예측과 다른 현상을 발견한 사람']
+  ],
+  events:[
+    '갑자기 전기가 끊겼다.','예약 기록이 두 사람의 이름만 남긴 채 사라졌다.','누군가가 두 사람에게 같은 메시지를 보냈다.','중요한 물건 하나가 사라졌다.','잠겨 있어야 할 문이 열려 있었다.','누군가 몰래 두 사람의 대화를 듣고 있었다.','건물 전체에 정체불명의 방송이 흘러나왔다.','경보가 울리기 시작했다.','예정되지 않은 손님이 나타났다.','누군가가 두 사람에게 도움을 요청했다.',
+    '보관함에서 오래된 사진이 발견됐다.','두 사람의 이름이 적힌 봉투가 발견됐다.','한 통의 편지가 도착했다.','휴대전화에 같은 알림이 동시에 떴다.','엘리베이터가 예상하지 못한 층에 멈췄다.','밖으로 나가는 길이 갑자기 막혔다.','시간이 잠깐 멈춘 것처럼 느껴졌다.','같은 장소가 잠시 다른 모습으로 변했다.','누군가의 흔적이 방금 전까지 있었던 것처럼 남아 있었다.','시계가 서로 다른 시간을 가리키기 시작했다.',
+    '거래 물품이 가짜라는 사실이 드러났다.','사라졌던 사람이 갑자기 연락해 왔다.','예정된 거래 시간이 앞당겨졌다.','두 세력 사이의 연락이 끊겼다.','비밀 장부의 한 페이지가 발견됐다.','누군가가 배신자를 찾고 있다는 소문이 퍼졌다.','도시의 감시망이 잠시 마비됐다.','익명의 제보가 도착했다.','예상치 못한 추격이 시작됐다.','중요한 증거가 두 사람 앞에 놓였다.',
+    '마법이 폭주했다.','금지된 문이 열렸다.','기록에서 사라졌던 이름이 다시 나타났다.','오래된 유물이 반응하기 시작했다.','누군가의 기억이 바뀌었다.','같은 꿈을 꾸었다는 사실을 알게 됐다.','봉인된 공간에서 소리가 들려왔다.','시간의 흐름이 잠시 뒤틀렸다.','보이지 않던 길이 나타났다.','두 사람에게만 보이는 문이 생겼다.',
+    '통신이 완전히 끊겼다.','예측되지 않은 신호가 잡혔다.','연구 데이터 일부가 삭제됐다.','격리 구역의 문이 열렸다.','구조 신호가 다시 송출됐다.','시스템이 두 사람을 같은 인물로 인식했다.','도착 예정 시간이 갑자기 바뀌었다.','외부와의 연결이 끊겼다.','관측 결과가 기존 기록과 달라졌다.','누군가가 존재하지 않는 출입 기록을 남겼다.'
+  ],
+  moods:['느긋하고 은밀한','설레면서 긴장감 있는','세련되고 어른스러운','위험하지만 차분한','코믹하고 가벼운','묘하게 불안한','몽환적인','서늘한','미스터리한','달콤씁쓸한','빠르게 전개되는','느리게 긴장이 쌓이는','비밀스러운','감정적으로 팽팽한','뜻밖의 유머가 섞인','도시적인','고풍스러운','화려하고 사치스러운','건조하고 냉정한','따뜻하지만 어딘가 쓸쓸한'],
+  props:['봉인된 편지','낡은 열쇠','검은 명함','호텔 객실 카드','오래된 사진','깨진 시계','USB 저장장치','수상한 계약서','금속 상자','작은 보석','가면','비밀 장부','녹음기','폴라로이드 사진','오래된 라이터','빈 병','암호가 적힌 메모','작은 펜던트','특이한 동전','검은 우산','초대장','경매 번호표','낡은 지도','붉은 리본','잠긴 서류 가방','낯선 휴대전화','열리지 않는 상자','식별 불가능한 신분증','기묘한 열쇠고리','손으로 쓴 명단'],
+  hooks:['서로에게 숨기고 있는 정보가 하나씩 있다.','둘 중 한 사람만 사건의 진짜 이유를 알고 있을 가능성이 있다.','오늘 밤 안에 반드시 해결해야 한다.','아침이 되기 전에 선택을 내려야 한다.','누군가 두 사람의 만남을 오래전부터 계획한 듯하다.','이번 일이 끝나면 다시 만나지 못할 수도 있다.','두 사람 중 한 명의 과거가 사건과 연결되어 있다.','겉으로는 우연처럼 보이지만 반복되는 흔적이 있다.','처음에는 사소한 일처럼 보였지만 점점 규모가 커진다.','서로 협력하지 않으면 진실에 도달하기 어렵다.','한쪽을 믿을지, 눈앞의 증거를 믿을지 결정해야 한다.','두 사람이 함께 있는 순간에만 단서가 나타난다.','이 장소에는 두 사람만 모르는 규칙이 있다.','누군가가 두 사람을 일부러 같은 곳으로 불렀다.','이번 사건의 시작점은 아주 오래전이었다.'],
+  closers:['그때, 복도 끝에서 발소리가 들렸다.','문 너머에서 누군가가 세 번 두드렸다.','휴대전화 화면에 새로운 메시지가 떠올랐다.','멀리서 음악이 멈췄다.','시계가 정확히 자정을 가리켰다.','밖에서 자동차 한 대가 멈춰 섰다.','잠겨 있던 문이 천천히 열렸다.','낯선 목소리가 두 사람의 이름을 불렀다.','창밖의 불빛이 하나둘 꺼졌다.','그리고 두 사람 앞에 예상하지 못한 선택지가 놓였다.']
+};
+
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function pickPair(a){return pick(a)}
+function makeRandomStory(){
+  const world=pick(AU.worlds), place=pick(AU.places), relation=pick(AU.relations);
+  const roles=pickPair(AU.roles), event=pick(AU.events), mood=pick(AU.moods), prop=pick(AU.props), hook=pick(AU.hooks), closer=pick(AU.closers);
+  const titleParts=[place, world.split(' ')[0], ['새벽','자정','오늘 밤','비밀','우연','마지막','첫 번째'][Math.floor(Math.random()*7)]];
+  const title=pick([`${place}에서의 ${titleParts[2]}`,`${titleParts[2]}의 ${place}`,`${place}, 그리고 두 사람`,`두 사람에게만 열린 ${place}`,`${world}의 ${place}`]);
+  const rolesText=`A · ${roles[0]}\nB · ${roles[1]}\n\n관계 · ${relation}`;
+  const opening=`${mood} 분위기가 감도는 ${world}.\n\n오늘 두 사람이 마주친 곳은 ${place}였다.\n\n두 사람의 관계는 ${relation}. 평범한 만남으로 끝날 수도 있었지만, ${event}\n\n그 순간 두 사람의 시선이 자연스럽게 ${prop}에 닿았다.\n\n${hook}\n\n${closer}\n\n이제 이야기는 두 사람의 선택에 따라 달라진다.`;
+  return {title,world:`${world}\n주요 장소 · ${place}\n분위기 · ${mood}\n핵심 단서 · ${prop}`,roles:rolesText,opening};
+}
+
+function applyStory(story,sendToPeer=true){
+  if(!story)return;
+  storyStarted=true;
+  $('empty').classList.add('hidden');
+  $('story').classList.remove('hidden');
+  $('title').textContent=story.title||'오늘의 AU';
+  $('info').textContent='RANDOM AU\n'+(story.world||'')+'\n\nROLES\n'+(story.roles||'');
+  $('opening').textContent=story.opening||'';
+  $('messages').innerHTML='';
+  if(sendToPeer)send({type:'story',story});
+}
+
+function startStory(){
+  if(!myReady()||!remoteReady)return toast('두 사람 모두 프로필을 작성해주세요.');
+  $('start').disabled=true;
+  if(role==='host'){
+    applyStory(makeRandomStory(),true);
+  }else{
+    send({type:'storyRequest'});
+    toast('새로운 AU를 만들고 있어요 ♡');
+  }
+  $('start').disabled=false;
+}
+
+$('start').onclick=startStory;
+$('new').onclick=()=>{
+  if(!confirm('새로운 AU를 만들까요? 현재 채팅은 초기화됩니다.'))return;
+  startStory();
+};
+
+/* ---------- chat ---------- */
+function addMessage(text,isMe,name){
+  const wrap=document.createElement('div');
+  const d=document.createElement('div');
+  d.className='msg '+(isMe?'me':'other');
+  d.textContent=text;
+  const meta=document.createElement('div');
+  meta.className='meta';
+  meta.textContent=isMe?'나':name||'상대';
+  wrap.appendChild(d);
+  wrap.appendChild(meta);
+  $('messages').appendChild(wrap);
+  $('messages').scrollTop=$('messages').scrollHeight;
+}
+
+$('send').onclick=()=>{
+  const x=$('text').value.trim();
+  if(!x)return;
+  if(!connected)return toast('아직 상대방과 연결되지 않았어요.');
+  const name=myProfile()?.name||'나';
+  addMessage(x,true,name);
+  send({type:'chat',text:x,name});
+  $('text').value='';
+};
+
+$('text').onkeydown=e=>{
+  if(e.key==='Enter'&&!e.shiftKey){
+    e.preventDefault();
+    $('send').click();
+  }
+};
+
+/* ---------- startup ---------- */
+if(role && roomCode){
+  enterRoom();
+}else if(urlRoom){
+  // URL로 들어온 참가자는 버튼을 누르지 않아도 참가 화면을 준비
+  $('landStatus').textContent='초대 링크를 통해 들어왔어요. 방 코드를 확인해주세요.';
+}
+</script>
+</body>
+</html>

@@ -14,7 +14,7 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
 .logo{font:46px Jua;color:#e88eaf;line-height:1}.heart{font-size:48px;color:#ee9abb}.sub{color:#a98c98;font-size:13px;line-height:1.7}
 .primary{background:#ef96b7;color:#fff;border-radius:14px;padding:13px 18px;box-shadow:0 8px 20px #ef96b733}.secondary{background:#fff0f5;color:#c66d8d;border:1px solid #f2cad9;border-radius:14px;padding:12px 16px}
 .join{display:flex;gap:8px;margin-top:12px}.join input{flex:1;border:1px solid #efd6e1;border-radius:14px;text-align:center;padding:11px;letter-spacing:3px;outline:0}
-.room{height:100vh;display:flex;flex-direction:column}.top{height:65px;background:#fff;border-bottom:1px solid #f1dce5;display:flex;align-items:center;justify-content:space-between;padding:0 22px}.brand{font:24px Jua;color:#e68cac}.code{font-size:12px;color:#a58391}
+.room{height:100vh;display:flex;flex-direction:column}.top{height:65px;background:#fff;border-bottom:1px solid #f1dce5;display:flex;align-items:center;justify-content:space-between;padding:0 22px;gap:10px}.mobile-character{display:none;background:#ffedf4;color:#bc6c89;border:1px solid #f2cad9;border-radius:11px;padding:8px 11px;font-size:11px;white-space:nowrap}.brand{font:24px Jua;color:#e68cac}.code{font-size:12px;color:#a58391}
 .main{flex:1;min-height:0;display:grid;grid-template-columns:245px 1fr}.side{background:#fffafb;border-right:1px solid #f1dce5;padding:20px;text-align:center}.side h3{font-size:11px;letter-spacing:2px;color:#ba8c9e}
 .avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;background:#fff0f6;border:4px solid #ffe0eb;margin:8px auto;display:flex;align-items:center;justify-content:center;color:#e89bb8;font-size:30px}.name{font:20px Jua}
 .sidebtn{width:100%;margin-top:12px;background:#ffedf4;color:#bc6c89;padding:11px;border-radius:12px}.private{font-size:10px;color:#b298a2;line-height:1.6;margin-top:18px}
@@ -27,7 +27,44 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
 .modal{position:fixed;inset:0;background:#4e304044;display:flex;align-items:center;justify-content:center;padding:18px;z-index:10}.modalbox{background:#fffafb;width:min(620px,96vw);max-height:92vh;overflow:auto;border-radius:25px;padding:27px;position:relative}.close{position:absolute;right:17px;top:10px;background:none;font-size:27px;color:#b995a4}.modalbox h2{font:27px Jua;font-weight:400}.modalbox label{display:block;font-size:11px;color:#967986;margin:9px 0}.modalbox input,.modalbox textarea{width:100%;margin-top:5px;border:1px solid #efd9e3;border-radius:10px;padding:10px;outline:0}.modalbox textarea{min-height:65px;resize:vertical}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modalactions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}.ai-note{background:#fff0f5;padding:12px;border-radius:12px;font-size:11px;line-height:1.7;color:#9a7181}
 .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#705463;color:#fff;padding:10px 15px;border-radius:12px;font-size:12px;opacity:0;transition:.2s;z-index:30}.toast.on{opacity:1;transform:translate(-50%,0)}
 .statusline{font-size:10px;color:#ad929e;margin-top:10px}.danger{color:#d67b98}
-@media(max-width:700px){.main{grid-template-columns:1fr}.side{display:none}.storyhead,.messages,.composer{padding-left:14px;padding-right:14px}.info,.opening{margin-left:14px;margin-right:14px}.grid{grid-template-columns:1fr}.msg{max-width:88%}}
+.chat-list-wrap{margin-top:22px;text-align:left;border-top:1px solid #f1dce5;padding-top:16px}.chat-list-title{font-size:10px;letter-spacing:1.5px;color:#ba8c9e;margin-bottom:8px}.chat-list{max-height:220px;overflow:auto}.chat-item{display:flex;align-items:center;gap:6px;padding:8px 7px;border-radius:10px;cursor:pointer;color:#8e707d;font-size:10px}.chat-item:hover{background:#fff0f5}.chat-item.active{background:#ffe5ef;color:#c66d8d;font-weight:700}.chat-item .ctitle{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chat-item .edit-title{font-size:11px;background:none;color:#c28a9e;padding:2px}.chat-empty{font-size:10px;color:#b9a3ac;padding:7px}.mobile-chat-list{display:none}
+
+@media(max-width:700px){
+  .top{height:58px;padding:0 10px;gap:8px}
+  .brand{font-size:19px;white-space:nowrap}
+  .code{font-size:0;margin-left:auto;display:flex;align-items:center;gap:5px}
+  .code b{font-size:10px}
+  .code button{font-size:10px!important;padding:6px 8px!important}
+  .mobile-character{display:block;order:3}
+  .main{grid-template-columns:1fr;min-height:0}
+  .side{display:none}
+  .mobile-chat-list{display:block;margin:16px 0 8px;padding-top:12px;border-top:1px solid #f1dce5}
+  #mobileProfileBtn{display:block}
+  .chat{min-height:calc(100vh - 58px)}
+  .storyhead{padding:13px 12px 9px;gap:8px}
+  .storyhead h2{font-size:23px}
+  .storyhead .new{padding:8px 9px;font-size:10px}
+  .messages,.composer{padding-left:12px;padding-right:12px}
+  .messages{padding-top:8px}
+  .composer{padding-top:9px;padding-bottom:max(10px,env(safe-area-inset-bottom));}
+  .composer textarea{min-width:0;font-size:13px}
+  .send{padding:9px 12px;font-size:12px}
+  .info,.opening{margin-left:12px;margin-right:12px}
+  .info{padding:11px;font-size:11px}
+  .opening{padding:13px;font-size:12px}
+  .grid{grid-template-columns:1fr}
+  .msg-wrap{max-width:78%}
+  .msg{max-width:100%;font-size:12px;padding:10px 12px}
+  .chat-avatar{width:30px;height:30px;flex-basis:30px;font-size:13px}
+  .chat-name{font-size:9px}
+  .empty{padding:22px 16px}
+  .empty h2{font-size:24px}
+  .modal{align-items:flex-end;padding:0}
+  .modalbox{width:100%;max-width:none;max-height:88vh;border-radius:24px 24px 0 0;padding:22px 17px calc(18px + env(safe-area-inset-bottom));}
+  .modalbox h2{font-size:24px}
+  .modalbox .close{right:14px;top:8px}
+  .modalactions{position:sticky;bottom:0;background:#fffafb;padding-top:10px}
+}
 </style>
 </head>
 <body>
@@ -48,7 +85,8 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
 <section id="room" class="room hidden">
 <header class="top">
   <div class="brand">♡ my sweet pair chat</div>
-  <div class="code">ROOM <b id="roomCode"></b>　<button id="invite" class="secondary" style="padding:7px 10px;font-size:11px">초대 링크</button></div>
+  <div class="code">ROOM <b id="roomCode"></b>　<button id="invite" class="secondary" style="padding:7px 10px;font-size:11px">초대 링크</button> <button id="leaveBtn" class="secondary" style="padding:7px 10px;font-size:11px">나가기</button></div>
+  <button id="mobileProfileBtn" class="mobile-character">♡ MY CHARACTER</button>
 </header>
 <div class="main">
 <aside class="side">
@@ -56,6 +94,7 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
   <div id="sideAvatar" class="avatar">♡</div><div id="sideName" class="name">프로필 미작성</div>
   <button id="profileBtn" class="sidebtn">✎ 내 프로필 설정</button>
   <div class="private">내 캐릭터 설정은 이 화면에서만 관리해요.<br>상대에게 프로필 편집 화면을 보여주지 않습니다.</div>
+  <div class="chat-list-wrap"><div class="chat-list-title">CHAT LIST ♡</div><div id="chatList" class="chat-list"></div></div>
   <div class="connection">
     <div><span id="connDot" class="dot"></span><b id="connText">상대 연결 대기중</b></div>
     <div id="connRole">HOST / GUEST</div>
@@ -72,7 +111,7 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
 </div>
 
 <div id="story" class="story hidden">
-  <div class="storyhead"><div><div class="eyebrow">RANDOM AU</div><h2 id="title"></h2></div><button id="new" class="new">✦ NEW AU</button></div>
+  <div class="storyhead"><div><div class="eyebrow">RANDOM AU</div><h2 id="title"></h2></div><button id="new" class="new">♡ 새 채팅 / 새 AU</button></div>
   <div id="info" class="info"></div><div id="opening" class="opening"></div>
   <div id="messages" class="messages"></div>
   <div class="composer"><textarea id="text" rows="2" placeholder="캐릭터의 행동이나 대사를 입력하세요..."></textarea><button id="send" class="send">보내기 ♡</button></div>
@@ -83,6 +122,7 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
 <div id="profileModal" class="modal hidden"><div class="modalbox">
 <button class="close" data-close="profileModal">×</button><div class="eyebrow">MY CHARACTER</div><h2>내 캐릭터 설정</h2>
 <div class="ai-note">이 정보는 내 브라우저에 저장됩니다. 상대에게는 프로필 내용이 전송되지 않고, 작성 완료 여부만 공유됩니다.</div>
+<div class="mobile-chat-list"><div class="chat-list-title">CHAT LIST ♡</div><div id="mobileChatList" class="chat-list"></div></div>
 <label>프로필 이미지<input id="pImg" type="file" accept="image/*"></label>
 <div class="grid">
 <label>이름<input id="pName"></label><label>나이<input id="pAge"></label>
@@ -120,6 +160,9 @@ let peer=null, conn=null, connected=false;
 let remoteReady=false;
 let remoteIdentity={name:'상대',img:''};
 let storyStarted=false;
+let chatSessions=[];
+let currentChatId=null;
+let sessionSeq=0;
 
 /* ---------- profile ---------- */
 function myProfile(){return profiles[role]||null}
@@ -156,33 +199,39 @@ function saveLocal(){
 }
 
 /* ---------- PeerJS / P2P ---------- */
+function resetConnectionState(){
+  connected=false; remoteReady=false; remoteIdentity={name:'상대',img:''};
+  if(conn){try{conn.close()}catch(e){} conn=null;}
+  if(peer){try{peer.destroy()}catch(e){} peer=null;}
+}
+
 function createPeer(){
-  if(peer) try{peer.destroy()}catch(e){}
-  peer=new Peer(); // PeerJS Cloud 기본값 사용
+  resetConnectionState();
+  peer=new Peer();
 
   peer.on('open',id=>{
     if(role==='host'){
       roomCode=id;
       localStorage.setItem('msp_room',roomCode);
       $('roomCode').textContent=roomCode;
+      loadSessions(); renderChatList(); renderCurrentSession();
       $('landStatus').textContent='방 생성 완료';
       toast('방을 만들었어요 ♡');
+    }else if(role==='guest'){
+      connectToHost();
     }
   });
 
   peer.on('connection',incoming=>{
-    if(role!=='host') return;
-    if(conn && conn.open){incoming.close();return;}
+    if(role!=='host') { try{incoming.close()}catch(e){}; return; }
+    if(conn && conn.open){ try{incoming.close()}catch(e){}; return; }
     setupConnection(incoming);
   });
 
-  peer.on('disconnected',()=>{
-    setConnection(false,'신호 서버 연결 끊김');
-  });
-
+  peer.on('disconnected',()=>setConnection(false,'신호 서버 연결 끊김'));
   peer.on('error',err=>{
     console.error(err);
-    if(err.type==='peer-unavailable') toast('그 방을 찾을 수 없어요.');
+    if(err.type==='peer-unavailable') toast('그 방을 찾을 수 없어요. 방 코드가 맞는지 확인해주세요.');
     else if(err.type==='network') toast('네트워크 연결을 확인해주세요.');
     else toast('연결 오류: '+(err.type||'unknown'));
   });
@@ -194,44 +243,37 @@ function myIdentity(){
 }
 
 function setupConnection(c){
+  if(conn && conn!==c){try{conn.close()}catch(e){}}
   conn=c;
   conn.on('open',()=>{
     connected=true;
     setConnection(true,'상대 연결됨');
-    // 프로필 내용은 보내지 않고 완료 여부만 보낸다.
     send({type:'ready',ready:myReady()});
     send({type:'identity',identity:myIdentity()});
+    if(role==='host') sendRoomState();
     toast('상대방과 연결됐어요 ♡');
     renderProfile();
   });
-
   conn.on('data',handleData);
-
   conn.on('close',()=>{
+    if(conn!==c)return;
     connected=false;remoteReady=false;
     setConnection(false,'상대 연결 종료');
     renderProfile();
     toast('상대방과 연결이 끊어졌어요.');
   });
-
-  conn.on('error',e=>{
-    console.error(e);
-    setConnection(false,'P2P 오류');
-  });
+  conn.on('error',e=>{console.error(e);setConnection(false,'P2P 오류')});
 }
 
 function connectToHost(){
-  if(!peer) return;
-  if(!roomCode) return toast('방 코드가 없어요.');
-  const target=roomCode.trim();
-  if(target===peer.id) return toast('자기 자신의 방에는 참가할 수 없어요.');
-  const c=peer.connect(target,{reliable:true,serialization:'json'});
+  if(!peer || !peer.open || role!=='guest' || !roomCode)return;
+  if(roomCode===peer.id)return toast('자기 자신의 방에는 참가할 수 없어요.');
+  if(conn && conn.open)return;
+  const c=peer.connect(roomCode,{reliable:true,serialization:'json'});
   setupConnection(c);
 }
 
-function send(data){
-  if(conn && conn.open) conn.send(data);
-}
+function send(data){ if(conn && conn.open) conn.send(data); }
 
 function setConnection(on,label){
   connected=on;
@@ -243,78 +285,134 @@ function setConnection(on,label){
 
 function handleData(data){
   if(!data || !data.type)return;
-
-  if(data.type==='ready'){
-    remoteReady=!!data.ready;
-    renderProfile();
+  if(data.type==='ready'){remoteReady=!!data.ready;renderProfile();return;}
+  if(data.type==='identity'){remoteIdentity={name:data.identity?.name||'상대',img:data.identity?.img||''};return;}
+  if(data.type==='roomState'){
+    if(role==='guest' && Array.isArray(data.sessions)){
+      chatSessions=data.sessions.map(normalizeSession);
+      currentChatId=data.currentChatId||chatSessions[0]?.id||null;
+      persistSessions(); renderChatList(); renderCurrentSession();
+    }
     return;
   }
-
-  if(data.type==='identity'){
-    remoteIdentity={name:data.identity?.name||'상대',img:data.identity?.img||''};
-    return;
-  }
-
   if(data.type==='chat'){
+    const s=getCurrentSession(data.chatId||currentChatId); if(!s)return;
     remoteIdentity={name:data.name||remoteIdentity.name||'상대',img:data.img||remoteIdentity.img||''};
-    addMessage(data.text,false,remoteIdentity.name,remoteIdentity.img);
+    const msg={id:data.id||makeId(),text:data.text||'',name:remoteIdentity.name,img:remoteIdentity.img,me:false,ts:data.ts||Date.now()};
+    if(!s.messages.some(m=>m.id===msg.id)){s.messages.push(msg);persistSessions();}
+    if(currentChatId===s.id) renderMessages(s);
     return;
   }
-
-  if(data.type==='storyRequest'){
-    if(role==='host' && myReady() && remoteReady) applyStory(makeRandomStory(),true);
-    return;
-  }
-
+  if(data.type==='storyRequest'){ if(role==='host'&&myReady()&&remoteReady) startNewChat(true); return; }
   if(data.type==='story'){
-    applyStory(data.story,false);
+    const s=getCurrentSession(data.story?.id||data.chatId);
+    if(s){s.story=data.story;persistSessions();renderChatList();renderCurrentSession();}
     return;
   }
-
-  if(data.type==='clear'){
-    $('messages').innerHTML='';
+  if(data.type==='newSession'){
+    if(role==='guest'){chatSessions=[...chatSessions.filter(s=>s.id!==data.session.id),normalizeSession(data.session)];currentChatId=data.session.id;persistSessions();renderChatList();renderCurrentSession();}
+    return;
+  }
+  if(data.type==='renameSessionRequest'){
+    if(role==='host'){
+      const s=getCurrentSession(data.id);
+      if(s){s.title=data.title||'새로운 채팅';persistSessions();renderChatList();renderCurrentSession();send({type:'renameSession',id:s.id,title:s.title});}
+    }
+    return;
+  }
+  if(data.type==='renameSession'){
+    const s=getCurrentSession(data.id); if(s){s.title=data.title;persistSessions();renderChatList();renderCurrentSession();}
+    return;
   }
 }
 
-/* ---------- room ---------- */
-function enterRoom(){
-  $('landing').classList.add('hidden');
-  $('room').classList.remove('hidden');
-  $('roomCode').textContent=roomCode||'연결중...';
-  $('connRole').textContent=(role||'').toUpperCase()+' / 연결중';
-  renderProfile();
-  createPeer();
-  if(role==='guest'){
-    // Peer 객체가 open 되면 참가 시도
-    peerOpenWait();
-  }
+/* ---------- room / session history ---------- */
+function makeId(){return Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8)}
+function normalizeSession(s){return {id:s.id||makeId(),title:s.title||'새로운 채팅',story:s.story||null,messages:Array.isArray(s.messages)?s.messages:[],createdAt:s.createdAt||Date.now()}}
+function sessionKey(){return 'msp_sessions_'+(roomCode||'unknown')}
+function loadSessions(){
+  try{chatSessions=JSON.parse(localStorage.getItem(sessionKey())||'[]').map(normalizeSession)}catch(e){chatSessions=[]}
+  currentChatId=chatSessions.at(-1)?.id||null;
 }
-
-function peerOpenWait(){
-  const tryConnect=()=>{
-    if(peer && peer.open) connectToHost();
-    else setTimeout(tryConnect,250);
+function persistSessions(){try{localStorage.setItem(sessionKey(),JSON.stringify(chatSessions))}catch(e){}}
+function getCurrentSession(id=currentChatId){return chatSessions.find(s=>s.id===id)||null}
+function renderChatList(){
+  const render=id=>{
+    const el=$(id); if(!el)return;
+    el.innerHTML='';
+    if(!chatSessions.length){el.innerHTML='<div class="chat-empty">아직 시작한 채팅이 없어요.</div>';return;}
+    [...chatSessions].reverse().forEach(s=>{
+      const row=document.createElement('div');row.className='chat-item '+(s.id===currentChatId?'active':'');
+      const title=document.createElement('div');title.className='ctitle';title.textContent=s.title||'새로운 채팅';title.onclick=()=>selectSession(s.id);
+      const edit=document.createElement('button');edit.className='edit-title';edit.textContent='✎';edit.onclick=e=>{e.stopPropagation();renameSession(s.id)};
+      row.append(title,edit);el.appendChild(row);
+    });
   };
-  tryConnect();
+  render('chatList');render('mobileChatList');
+}
+function selectSession(id){
+  if(!getCurrentSession(id))return;
+  currentChatId=id;persistSessions();renderChatList();renderCurrentSession();
+  if(window.innerWidth<=700)$('profileModal').classList.add('hidden');
+}
+function renameSession(id){
+  const s=getCurrentSession(id);if(!s)return;
+  const next=prompt('채팅 제목을 입력해주세요.',s.title||'새로운 채팅');
+  if(next===null)return;
+  s.title=next.trim()||'새로운 채팅';persistSessions();renderChatList();renderCurrentSession();
+  if(role==='host')send({type:'renameSession',id,title:s.title}); else send({type:'renameSessionRequest',id,title:s.title});
+}
+function sendRoomState(){send({type:'roomState',sessions:chatSessions,currentChatId});}
+function renderMessages(s){
+  $('messages').innerHTML='';
+  (s.messages||[]).forEach(m=>addMessage(m.text,!!m.me,m.name,m.img));
+}
+function renderCurrentSession(){
+  const s=getCurrentSession();
+  if(!s){$('empty').classList.remove('hidden');$('story').classList.add('hidden');return;}
+  $('empty').classList.add('hidden');$('story').classList.remove('hidden');
+  $('title').textContent=s.title||'새로운 채팅';
+  if(s.story){
+    $('info').textContent='RANDOM AU\n'+(s.story.world||'')+'\n\nROLES\n'+(s.story.roles||'');
+    $('opening').textContent=s.story.opening||'';
+  }else{$('info').textContent='새 채팅을 준비하는 중이에요.';$('opening').textContent='';}
+  renderMessages(s);
+}
+function createSession(){
+  const s=normalizeSession({id:makeId(),title:'새로운 채팅 '+(chatSessions.length+1),createdAt:Date.now(),messages:[]});
+  chatSessions.push(s);currentChatId=s.id;persistSessions();renderChatList();renderCurrentSession();return s;
+}
+function startNewChat(sendRequest=false){
+  if(!myReady()||!remoteReady)return toast('두 사람 모두 프로필을 작성해주세요.');
+  if(role!=='host'){
+    send({type:'storyRequest'});toast('새로운 채팅을 만들고 있어요 ♡');return;
+  }
+  const s=createSession();
+  const story=makeRandomStory();story.id=s.id;s.story=story;
+  s.title=story.title||s.title;persistSessions();renderChatList();renderCurrentSession();
+  send({type:'newSession',session:s});
+}
+
+function enterRoom(){
+  $('landing').classList.add('hidden');$('room').classList.remove('hidden');
+  $('roomCode').textContent=roomCode||'연결중...';$('connRole').textContent=(role||'').toUpperCase()+' / 연결중';
+  loadSessions();renderProfile();renderChatList();renderCurrentSession();createPeer();
 }
 
 $('hostBtn').onclick=()=>{
-  role='host';
-  roomCode=null;
-  localStorage.setItem('msp_role','host');
-  localStorage.removeItem('msp_room');
+  resetConnectionState();role='host';roomCode=null;
+  localStorage.setItem('msp_role','host');localStorage.removeItem('msp_room');
   enterRoom();
 };
 
-$('joinBtn').onclick=()=>{
-  const c=$('code').value.trim();
-  if(!c)return toast('방 코드를 입력해주세요.');
-  role='guest';
-  roomCode=c;
-  localStorage.setItem('msp_role','guest');
-  localStorage.setItem('msp_room',roomCode);
+function joinWithCode(c){
+  c=(c||'').trim();if(!c)return toast('방 코드를 입력해주세요.');
+  resetConnectionState();role='guest';roomCode=c;
+  localStorage.setItem('msp_role','guest');localStorage.setItem('msp_room',roomCode);
   enterRoom();
-};
+}
+$('joinBtn').onclick=()=>joinWithCode($('code').value);
+$('code').onkeydown=e=>{if(e.key==='Enter')joinWithCode($('code').value)};
 
 $('invite').onclick=()=>{
   if(!roomCode)return toast('방 코드를 기다리는 중이에요.');
@@ -322,13 +420,23 @@ $('invite').onclick=()=>{
   navigator.clipboard?.writeText(u).then(()=>toast('초대 링크를 복사했어요 ♡')).catch(()=>prompt('이 링크를 복사해주세요.',u));
 };
 
+$('leaveBtn').onclick=()=>{
+  if(!confirm('현재 방에서 나갈까요?'))return;
+  resetConnectionState();role=null;roomCode=null;remoteReady=false;currentChatId=null;chatSessions=[];
+  localStorage.removeItem('msp_role');localStorage.removeItem('msp_room');
+  $('room').classList.add('hidden');$('landing').classList.remove('hidden');$('code').value='';$('landStatus').textContent='';
+};
+
 const urlRoom=new URLSearchParams(location.search).get('room');
 if(urlRoom){
+  // 초대 링크가 있으면 저장된 이전 방보다 URL을 무조건 우선한다.
+  localStorage.removeItem('msp_role');localStorage.removeItem('msp_room');
   $('code').value=urlRoom;
+  setTimeout(()=>joinWithCode(urlRoom),0);
 }
 
 /* ---------- profile modal ---------- */
-$('profileBtn').onclick=()=>{
+const openProfile=()=>{
   const p=myProfile()||{};
   const fields=['Name','Age','Gender','Intro','Appearance','Personality','Speech','Likes','Dislikes','Extra'];
   fields.forEach(k=>{
@@ -337,6 +445,8 @@ $('profileBtn').onclick=()=>{
   });
   $('profileModal').classList.remove('hidden');
 };
+$('profileBtn').onclick=openProfile;
+$('mobileProfileBtn').onclick=openProfile;
 
 $('saveProfile').onclick=()=>{
   const p={
@@ -443,95 +553,42 @@ function makeRandomStory(){
 
 function applyStory(story,sendToPeer=true){
   if(!story)return;
-  storyStarted=true;
-  $('empty').classList.add('hidden');
-  $('story').classList.remove('hidden');
-  $('title').textContent=story.title||'오늘의 AU';
-  $('info').textContent='RANDOM AU\n'+(story.world||'')+'\n\nROLES\n'+(story.roles||'');
-  $('opening').textContent=story.opening||'';
-  $('messages').innerHTML='';
+  const s=getCurrentSession(story.id||currentChatId);
+  if(!s)return;
+  s.story=story;s.title=story.title||s.title;persistSessions();renderChatList();renderCurrentSession();
   if(sendToPeer)send({type:'story',story});
 }
 
-function startStory(){
-  if(!myReady()||!remoteReady)return toast('두 사람 모두 프로필을 작성해주세요.');
-  $('start').disabled=true;
-  if(role==='host'){
-    applyStory(makeRandomStory(),true);
-  }else{
-    send({type:'storyRequest'});
-    toast('새로운 AU를 만들고 있어요 ♡');
-  }
-  $('start').disabled=false;
-}
-
-$('start').onclick=startStory;
-$('new').onclick=()=>{
-  if(!confirm('새로운 AU를 만들까요? 현재 채팅은 초기화됩니다.'))return;
-  startStory();
-};
+$('start').onclick=()=>startNewChat();
+$('new').onclick=()=>startNewChat();
 
 /* ---------- chat ---------- */
 function addMessage(text,isMe,name,img){
-  const row=document.createElement('div');
-  row.className='message-row '+(isMe?'me':'other');
-
-  const avatar=document.createElement('div');
-  avatar.className='chat-avatar';
-  if(img){
-    const image=document.createElement('img');
-    image.src=img;
-    avatar.appendChild(image);
-  }else{
-    avatar.textContent='♡';
-  }
-
-  const wrap=document.createElement('div');
-  wrap.className='msg-wrap';
-  const nameEl=document.createElement('div');
-  nameEl.className='chat-name';
-  nameEl.textContent=name||'상대';
-  const d=document.createElement('div');
-  d.className='msg';
-  d.textContent=text;
-  wrap.appendChild(nameEl);
-  wrap.appendChild(d);
-
-  if(isMe){
-    row.appendChild(wrap);
-    row.appendChild(avatar);
-  }else{
-    row.appendChild(avatar);
-    row.appendChild(wrap);
-  }
-
-  $('messages').appendChild(row);
-  $('messages').scrollTop=$('messages').scrollHeight;
+  const row=document.createElement('div');row.className='message-row '+(isMe?'me':'other');
+  const avatar=document.createElement('div');avatar.className='chat-avatar';
+  if(img){const image=document.createElement('img');image.src=img;avatar.appendChild(image)}else avatar.textContent='♡';
+  const wrap=document.createElement('div');wrap.className='msg-wrap';
+  const nameEl=document.createElement('div');nameEl.className='chat-name';nameEl.textContent=name||'상대';
+  const d=document.createElement('div');d.className='msg';d.textContent=text;wrap.append(nameEl,d);
+  if(isMe)row.append(wrap,avatar);else row.append(avatar,wrap);
+  $('messages').appendChild(row);$('messages').scrollTop=$('messages').scrollHeight;
 }
 
 $('send').onclick=()=>{
-  const x=$('text').value.trim();
-  if(!x)return;
+  const x=$('text').value.trim();if(!x)return;
   if(!connected)return toast('아직 상대방과 연결되지 않았어요.');
-  const identity=myIdentity();
-  addMessage(x,true,identity.name,identity.img);
-  send({type:'chat',text:x,name:identity.name,img:identity.img});
+  const s=getCurrentSession();if(!s)return toast('먼저 채팅을 시작해주세요.');
+  const identity=myIdentity();const msg={id:makeId(),text:x,name:identity.name,img:identity.img,me:true,ts:Date.now()};
+  s.messages.push(msg);persistSessions();addMessage(x,true,identity.name,identity.img);
+  send({type:'chat',chatId:s.id,id:msg.id,text:x,name:identity.name,img:identity.img,ts:msg.ts});
   $('text').value='';
 };
-
-$('text').onkeydown=e=>{
-  if(e.key==='Enter'&&!e.shiftKey){
-    e.preventDefault();
-    $('send').click();
-  }
-};
+$('text').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('send').click()}};
 
 /* ---------- startup ---------- */
-if(role && roomCode){
-  enterRoom();
-}else if(urlRoom){
-  // URL로 들어온 참가자는 버튼을 누르지 않아도 참가 화면을 준비
-  $('landStatus').textContent='초대 링크를 통해 들어왔어요. 방 코드를 확인해주세요.';
+if(!urlRoom){
+  // 이전 방을 자동 복원하지 않는다. 새로 들어올 때는 방 만들기/코드 입력을 다시 선택한다.
+  localStorage.removeItem('msp_role');localStorage.removeItem('msp_room');
 }
 </script>
 </body>

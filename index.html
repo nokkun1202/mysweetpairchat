@@ -14,7 +14,7 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
 .logo{font:46px Jua;color:#e88eaf;line-height:1}.heart{font-size:48px;color:#ee9abb}.sub{color:#a98c98;font-size:13px;line-height:1.7}
 .primary{background:#ef96b7;color:#fff;border-radius:14px;padding:13px 18px;box-shadow:0 8px 20px #ef96b733}.secondary{background:#fff0f5;color:#c66d8d;border:1px solid #f2cad9;border-radius:14px;padding:12px 16px}
 .join{display:flex;gap:8px;margin-top:12px}.join input{flex:1;border:1px solid #efd6e1;border-radius:14px;text-align:center;padding:11px;letter-spacing:3px;outline:0}
-.room{height:100vh;display:flex;flex-direction:column}.top{height:65px;background:#fff;border-bottom:1px solid #f1dce5;display:flex;align-items:center;justify-content:space-between;padding:0 22px;gap:10px}.mobile-character{display:none;background:#ffedf4;color:#bc6c89;border:1px solid #f2cad9;border-radius:11px;padding:8px 11px;font-size:11px;white-space:nowrap}.brand{font:24px Jua;color:#e68cac}.code{font-size:12px;color:#a58391}
+.room{height:100vh;display:flex;flex-direction:column}.top{height:65px;background:#fff;border-bottom:1px solid #f1dce5;display:flex;align-items:center;justify-content:space-between;padding:0 22px}.brand{font:24px Jua;color:#e68cac}.code{font-size:12px;color:#a58391}
 .main{flex:1;min-height:0;display:grid;grid-template-columns:245px 1fr}.side{background:#fffafb;border-right:1px solid #f1dce5;padding:20px;text-align:center}.side h3{font-size:11px;letter-spacing:2px;color:#ba8c9e}
 .avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;background:#fff0f6;border:4px solid #ffe0eb;margin:8px auto;display:flex;align-items:center;justify-content:center;color:#e89bb8;font-size:30px}.name{font:20px Jua}
 .sidebtn{width:100%;margin-top:12px;background:#ffedf4;color:#bc6c89;padding:11px;border-radius:12px}.private{font-size:10px;color:#b298a2;line-height:1.6;margin-top:18px}
@@ -27,40 +27,7 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
 .modal{position:fixed;inset:0;background:#4e304044;display:flex;align-items:center;justify-content:center;padding:18px;z-index:10}.modalbox{background:#fffafb;width:min(620px,96vw);max-height:92vh;overflow:auto;border-radius:25px;padding:27px;position:relative}.close{position:absolute;right:17px;top:10px;background:none;font-size:27px;color:#b995a4}.modalbox h2{font:27px Jua;font-weight:400}.modalbox label{display:block;font-size:11px;color:#967986;margin:9px 0}.modalbox input,.modalbox textarea{width:100%;margin-top:5px;border:1px solid #efd9e3;border-radius:10px;padding:10px;outline:0}.modalbox textarea{min-height:65px;resize:vertical}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modalactions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}.ai-note{background:#fff0f5;padding:12px;border-radius:12px;font-size:11px;line-height:1.7;color:#9a7181}
 .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#705463;color:#fff;padding:10px 15px;border-radius:12px;font-size:12px;opacity:0;transition:.2s;z-index:30}.toast.on{opacity:1;transform:translate(-50%,0)}
 .statusline{font-size:10px;color:#ad929e;margin-top:10px}.danger{color:#d67b98}
-@media(max-width:700px){
-  .top{height:58px;padding:0 10px;gap:8px}
-  .brand{font-size:19px;white-space:nowrap}
-  .code{font-size:0;margin-left:auto;display:flex;align-items:center;gap:5px}
-  .code b{font-size:10px}
-  .code button{font-size:10px!important;padding:6px 8px!important}
-  .mobile-character{display:block;order:3}
-  .main{grid-template-columns:1fr;min-height:0}
-  .side{display:none}
-  .chat{min-height:calc(100vh - 58px)}
-  .storyhead{padding:13px 12px 9px;gap:8px}
-  .storyhead h2{font-size:23px}
-  .storyhead .new{padding:8px 9px;font-size:10px}
-  .messages,.composer{padding-left:12px;padding-right:12px}
-  .messages{padding-top:8px}
-  .composer{padding-top:9px;padding-bottom:max(10px,env(safe-area-inset-bottom));}
-  .composer textarea{min-width:0;font-size:13px}
-  .send{padding:9px 12px;font-size:12px}
-  .info,.opening{margin-left:12px;margin-right:12px}
-  .info{padding:11px;font-size:11px}
-  .opening{padding:13px;font-size:12px}
-  .grid{grid-template-columns:1fr}
-  .msg-wrap{max-width:78%}
-  .msg{max-width:100%;font-size:12px;padding:10px 12px}
-  .chat-avatar{width:30px;height:30px;flex-basis:30px;font-size:13px}
-  .chat-name{font-size:9px}
-  .empty{padding:22px 16px}
-  .empty h2{font-size:24px}
-  .modal{align-items:flex-end;padding:0}
-  .modalbox{width:100%;max-width:none;max-height:88vh;border-radius:24px 24px 0 0;padding:22px 17px calc(18px + env(safe-area-inset-bottom));}
-  .modalbox h2{font-size:24px}
-  .modalbox .close{right:14px;top:8px}
-  .modalactions{position:sticky;bottom:0;background:#fffafb;padding-top:10px}
-}
+@media(max-width:700px){.main{grid-template-columns:1fr}.side{display:none}.storyhead,.messages,.composer{padding-left:14px;padding-right:14px}.info,.opening{margin-left:14px;margin-right:14px}.grid{grid-template-columns:1fr}.msg{max-width:88%}}
 </style>
 </head>
 <body>
@@ -82,7 +49,6 @@ button,input,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{displa
 <header class="top">
   <div class="brand">♡ my sweet pair chat</div>
   <div class="code">ROOM <b id="roomCode"></b>　<button id="invite" class="secondary" style="padding:7px 10px;font-size:11px">초대 링크</button></div>
-  <button id="mobileProfileBtn" class="mobile-character">♡ MY CHARACTER</button>
 </header>
 <div class="main">
 <aside class="side">
@@ -362,7 +328,7 @@ if(urlRoom){
 }
 
 /* ---------- profile modal ---------- */
-const openProfile=()=>{
+$('profileBtn').onclick=()=>{
   const p=myProfile()||{};
   const fields=['Name','Age','Gender','Intro','Appearance','Personality','Speech','Likes','Dislikes','Extra'];
   fields.forEach(k=>{
@@ -371,8 +337,6 @@ const openProfile=()=>{
   });
   $('profileModal').classList.remove('hidden');
 };
-$('profileBtn').onclick=openProfile;
-$('mobileProfileBtn').onclick=openProfile;
 
 $('saveProfile').onclick=()=>{
   const p={
